@@ -1,0 +1,7 @@
+Diary of Jonas Mosimann & Kevin Tippenhauer
+
+
+Date		Duration	Who		Task
+29.09.16	0.5h		Jonas	Information about course
+29.09.16	0.5h		Kevin	Information about course
+29.09.16	1h			Jonas	Installed Eclipse, created & added repository
