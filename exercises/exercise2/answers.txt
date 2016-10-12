@@ -1,0 +1,11 @@
+1. Different words:
+   - unmodified: 5870
+   - lower cased: 5253
+   - without stop words: 5007
+     - ~47% stop words
+   - stemmed: 4027
+2. No, additional we needed additional delimiters. Quotes and more are still not properly filtered, same goes for split words.
+   A more developed tokenizer could increase the data quality a lot.
+3. Only if we plan a further usage of the data. For a simple term frequency distribution -> No.
+4. Depends on the use case, case folding could improve the results. The text is written in English
+   and written by one author, this reduces the effects of a language normalization to the term frequency distribution.
