@@ -4,4 +4,11 @@
   <artifactId>ch.bfh.bti7535.w2016.medInf</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>ch.bfh.bti7535.w2016.medInf</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.apache.opennlp</groupId>
+  		<artifactId>opennlp-tools</artifactId>
+  		<version>1.6.0</version>
+  	</dependency>
+  </dependencies>
 </project>
