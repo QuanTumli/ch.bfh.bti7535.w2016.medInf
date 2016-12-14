@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import configuration.SpringConfiguration;
+import configuration.TokenizerConfiguration;
 import helpers.TokenizationHelper;
 import opennlp.tools.tokenize.Tokenizer;
 
@@ -16,15 +16,11 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		ApplicationContext context = 
-		          new AnnotationConfigApplicationContext(SpringConfiguration.class);
+		          new AnnotationConfigApplicationContext(TokenizerConfiguration.class);
 		
 		Tokenizer tokenizer = context.getBean(Tokenizer.class);
-		
 		TokenizationHelper.tokenizeFilesInFolder(path + "train/neg", tokenizer);
 		TokenizationHelper.tokenizeFilesInFolder(path + "train/pos", tokenizer);
-
-		
-		
 	}
 	
 	

@@ -14,7 +14,7 @@ import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
 
 @Configuration
-public class SpringConfiguration {
+public class TokenizerConfiguration {
 	
 	@Bean	
 	public Tokenizer getTokenizer() throws IOException {
