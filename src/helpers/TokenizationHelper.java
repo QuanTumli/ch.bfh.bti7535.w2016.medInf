@@ -44,7 +44,7 @@ public class TokenizationHelper {
 		}
 	}
 	
-	private static String readFile(Path filePath) throws IOException {
+	public static String readFile(Path filePath) throws IOException {
 		try {
 			return new String(Files.readAllBytes(filePath));
 		} catch (FileNotFoundException e) {
