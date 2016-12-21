@@ -1,0 +1,12 @@
+TASK
+1) text to be analyzed: pre-classified data set
+2) design and implement an SA algorithm
+	a) baseline: counting sentiment words
+	b) sentiment classification with NB
+		- features? implement your own idea(s)
+3) evaluate implementation
+	- metric: accuracy
+	- compare against
+		a)gold standard
+		b) baseline
+		c) different iterations of your algorithm
