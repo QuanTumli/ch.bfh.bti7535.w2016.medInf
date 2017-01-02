@@ -18,6 +18,7 @@ public class TokenizationHelper {
 	public static void tokenizeFilesInFolder(String aPath, Tokenizer tokenizer) throws IOException {
 		try(Stream<Path> paths = Files.walk(Paths.get(aPath))) {
 		    paths.forEach(filePath -> {
+		    	if(!filePath.endsWith("neg")  && !filePath.endsWith("pos")) {
 				String fileContent;
 				try {
 					fileContent = readFile(filePath);
@@ -40,6 +41,7 @@ public class TokenizationHelper {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+		    	}
 		    });
 		}
 	}
