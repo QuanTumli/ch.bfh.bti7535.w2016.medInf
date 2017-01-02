@@ -38,9 +38,10 @@ public class WordCountSentimentAnalyzer extends Analyzer {
 		}
 		for(String negativeWord : negatives.keySet()) {
 			int count = StringUtils.countOccurrencesOf(message, negativeWord);
-			countedNegativWords -= (count * negatives.get(negativeWord));
+			countedNegativWords += (count * negatives.get(negativeWord));
 		}
-		return (countedPositivWords / (countedPositivWords + countedNegativWords) > 0.5) ? 1 : -1;
+		System.out.println(countedPositivWords + "/(" + countedPositivWords + "+" + countedNegativWords + ")=" + ((float)countedPositivWords / (float)(countedPositivWords + countedNegativWords)));
+		return ((float)countedPositivWords / (float)(countedPositivWords + countedNegativWords) > 0.5) ? 1 : -1;
 		
 	}
 
