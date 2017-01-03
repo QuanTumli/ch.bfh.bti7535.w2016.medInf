@@ -9,6 +9,7 @@ import configuration.AnalyzerConfiguration;
 import configuration.TokenizerConfiguration;
 import helpers.FileSorter;
 import interfaces.Analyzer;
+import opennlp.tools.tokenize.Tokenizer;
 
 public class Main {
 
@@ -20,7 +21,7 @@ public class Main {
 				AnalyzerConfiguration.class);
 
 		// tokenize files
-		// Tokenizer tokenizer = context.getBean(Tokenizer.class);
+		 Tokenizer tokenizer = context.getBean(Tokenizer.class);
 		// TokenizationHelper.tokenizeFilesInFolder(path + "train/neg",
 		// tokenizer);
 		// TokenizationHelper.tokenizeFilesInFolder(path + "train/pos",
@@ -42,17 +43,26 @@ public class Main {
 		// WordMappingHelper.mapWordsFromFilesInFolder(subPath + "/neg",
 		// tokenizer);
 
-		Analyzer analyzer = context.getBean(Analyzer.class);
+		/*Analyzer analyzer = context.getBean(Analyzer.class);
 //		// subPath = path + "results/" + analyzer.getClass();
 //
 		FileSorter fileSorter = new FileSorter(analyzer);
 		fileSorter.sort(path);
-		
+		*/
 //		JavaPlot p = new JavaPlot();
 //      p.addPlot("\"D:/Workspaces/Git/ch.bfh.bti7535.w2016.medInf/resources/test_data/set_0_99/train/wordMapped/SimpleTokenizer/mixed.txt\" using 2:xticlabels(1) with histogram");
 ////		"< sort C:/Users/quantumli/workspace/ch.bfh.bti7535.w2016.medInf/exercises/exercise1/pg1524_count.txt" using 2:xticlabels(1) with histogram
 //		p.plot();
 
+		
+		String posWords = path + "train/wordMapped/" + tokenizer.getClass().getSimpleName() + "/pos.txt";
+		String negWords = path + "train/wordMapped/" + tokenizer.getClass().getSimpleName() + "/neg.txt";
+		String posTrain = path + "train/pos";
+		String negTrain = path + "train/neg";
+		
+		SentimentAnalyse sa = new SentimentAnalyse();
+		sa.trainFilesInFolder(posTrain, posWords, negTrain, negWords);
+		
 	}
 
 }

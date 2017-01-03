@@ -56,9 +56,13 @@ public class FileHelper {
 				}
 		}
 	}
-
+	
 	public static Map<String, Integer> readFileToMap(Path filePath){
-		BufferedReader bufferedReader = readFile(filePath.toString());
+		return readFileToMap(filePath.toString());
+	}
+	
+	public static Map<String, Integer> readFileToMap(String filePath){
+		BufferedReader bufferedReader = readFile(filePath);
 		String inputLine = null;
 		Map<String, Integer> wordMap = new HashMap<String, Integer>();
 		try {
