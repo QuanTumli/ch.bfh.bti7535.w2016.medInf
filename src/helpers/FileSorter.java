@@ -32,17 +32,17 @@ public class FileSorter {
 						fileContent = new String(Files.readAllBytes(filePath));
 						System.out.println("--------------------------------------------------------------------------------------------------");
 						
-						int result = analyzer.analyze(fileContent, true);
+						int result = analyzer.analyze(fileContent, false);
 						System.out.println(filePath.getFileName() + " : " + result);
 						if (result > 0) {
 							Path aPath = Paths.get(
-									path + "/results/" + analyzer.getClass().getSimpleName() + "/withWeights/pos/"
+									path + "/results/" + analyzer.getClass().getSimpleName() + "/withoutWeights/pos/"
 											+ posOrNegAppendix + "_" + filePath.getFileName().toString());
 							aPath.toFile().mkdirs();
 							Files.copy(filePath, aPath, StandardCopyOption.REPLACE_EXISTING);
 						} else {
 							Path aPath = Paths.get(
-									path + "/results/" + analyzer.getClass().getSimpleName() + "/withWeights/neg/"
+									path + "/results/" + analyzer.getClass().getSimpleName() + "/withoutWeights/neg/"
 											+ posOrNegAppendix + "_" + filePath.getFileName().toString());
 							aPath.toFile().mkdirs();
 							Files.copy(filePath, aPath, StandardCopyOption.REPLACE_EXISTING);

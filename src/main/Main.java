@@ -1,12 +1,6 @@
 package main;
 
-import java.io.Console;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.stream.Stream;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -14,9 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import configuration.AnalyzerConfiguration;
 import configuration.TokenizerConfiguration;
 import helpers.FileSorter;
-import helpers.TokenizationHelper;
 import interfaces.Analyzer;
-import opennlp.tools.tokenize.Tokenizer;
 
 public class Main {
 
@@ -51,11 +43,15 @@ public class Main {
 		// tokenizer);
 
 		Analyzer analyzer = context.getBean(Analyzer.class);
-		// subPath = path + "results/" + analyzer.getClass();
-
+//		// subPath = path + "results/" + analyzer.getClass();
+//
 		FileSorter fileSorter = new FileSorter(analyzer);
 		fileSorter.sort(path);
 		
+//		JavaPlot p = new JavaPlot();
+//      p.addPlot("\"D:/Workspaces/Git/ch.bfh.bti7535.w2016.medInf/resources/test_data/set_0_99/train/wordMapped/SimpleTokenizer/mixed.txt\" using 2:xticlabels(1) with histogram");
+////		"< sort C:/Users/quantumli/workspace/ch.bfh.bti7535.w2016.medInf/exercises/exercise1/pg1524_count.txt" using 2:xticlabels(1) with histogram
+//		p.plot();
 
 	}
 
