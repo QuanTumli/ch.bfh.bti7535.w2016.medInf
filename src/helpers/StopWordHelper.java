@@ -19,7 +19,7 @@ import opennlp.tools.tokenize.Tokenizer;
 public class StopWordHelper {
 
 	public static void removeStopWordsForFilesInFolder(String aPath, Tokenizer tokenizer) {
-		List<String> stopWords =  readStopWordList("resources/stop-word-list.txt");
+		List<String> stopWords =  readStopWordList("resources/stop-word-list-old.txt");
 		
 		try(Stream<Path> paths = Files.walk(Paths.get(aPath))) {
 		    paths.forEach(filePath -> {

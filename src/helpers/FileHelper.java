@@ -10,11 +10,42 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class FileHelper {
+	
+	public static List<String> getFileNamesFromFolder(String folderPath) {
+		try(Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
+			List<String> fileNames = new ArrayList<String>();
+		    paths.forEach(filePath -> {
+		    	if(!filePath.endsWith("neg")  && !filePath.endsWith("pos")) {
+		    		fileNames.add(filePath.toString());
+		    	}
+		    });
+		    return fileNames;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		return null;
+	}
+	
+	public static String readFileToString(String filePath) throws IOException {
+		try {
+			return new String(Files.readAllBytes(Paths.get(filePath)));
+		} catch (FileNotFoundException e) {
+			System.err.println("ERROR: FileNotFound");
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public static BufferedReader readFile(String fileName) {
 		File file = new File(fileName);
