@@ -29,7 +29,7 @@ public class TokenizationHelper {
 					// Creates a file in "resources\test_data\set_0_99\train\tokenized\WhitespaceTokenizer\neg\test.txt"
 					Path tokenizedFile = Paths.get(filePath.getParent().getParent().toString() + "/tokenized/" + 
 							tokenizer.getClass().getSimpleName() + "/" + filePath.getParent().getFileName() + "/" + filePath.getFileName());
-					System.out.println(tokenizedFile.toString());
+//					System.out.println(tokenizedFile.toString());
 					try {
 						Files.write(tokenizedFile, lines, Charset.forName("UTF-8"));
 					} catch(NoSuchFileException ex) {

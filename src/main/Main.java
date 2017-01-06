@@ -33,6 +33,7 @@ public class Main {
 			"resources/test_data/set_200_299/", "resources/test_data/set_300_399/", "resources/test_data/set_400_499/",
 			"resources/test_data/set_500_599/", "resources/test_data/set_600_699/", "resources/test_data/set_700_799/",
 			"resources/test_data/set_800_899/", "resources/test_data/set_900_999/" };
+	
 
 	// Make sure there is a "path + 'train/neg'" and a "path + 'train/pos'"
 
@@ -50,7 +51,12 @@ public class Main {
 		List<Analyzer> analyzers = (List<Analyzer>) context.getBean("getAnalyzer");
 
 		for (String path : paths) {
+			System.out.println();
+			System.out.println("Starting with: " + path);
 			for (Tokenizer tokenizer : tokenizers) {
+				System.out.println();
+				System.out.println("--- Starting with:" + tokenizer.getClass().getSimpleName());
+				
 				TokenizationHelper.tokenizeFilesInFolder(path + "train/neg", tokenizer);
 				TokenizationHelper.tokenizeFilesInFolder(path + "train/pos", tokenizer);
 
@@ -64,10 +70,10 @@ public class Main {
 				WordMappingHelper.mapWordsFromFilesInFolder(subPath + "/pos", tokenizer);
 				WordMappingHelper.mapWordsFromFilesInFolder(subPath + "/neg", tokenizer);
 
-				Thread.sleep(1000);
+				Map<String, Integer> negatives = FileHelper.readFileToMap(Paths.get(path + "/train/wordMapped/" + tokenizer.getClass().getSimpleName() + "/neg.txt"));
+				Map<String, Integer> positives = FileHelper.readFileToMap(Paths.get(path + "/train/wordMapped/" + tokenizer.getClass().getSimpleName() + "/pos.txt"));
 				for (Analyzer analyzer : analyzers) {
-					Map<String, Integer> negatives = FileHelper.readFileToMap(Paths.get(path + "/wordMapped/" + tokenizer.getClass().getSimpleName() + "/neg.txt"));
-					Map<String, Integer> positives = FileHelper.readFileToMap(Paths.get(path + "/wordMapped/" + tokenizer.getClass().getSimpleName() + "/pos.txt"));
+					System.out.println("------ Starting with: " + analyzer.getClass().getSimpleName());
 					
 					analyzer.setNegativeWords(negatives);
 					analyzer.setPositiveWords(positives);
@@ -79,12 +85,12 @@ public class Main {
 
 		}
 		
-		for (Tokenizer tokenizer : tokenizers) {
-			/* new try */
-			//new TestTrainWithBayes(tokenizer);
-			System.out.println("------------------" + tokenizer.getClass().getSimpleName() + "------------------");
-			new TestTrainWithMyModel(tokenizer);
-		}
+//		for (Tokenizer tokenizer : tokenizers) {
+//			/* new try */
+//			//new TestTrainWithBayes(tokenizer);
+//			System.out.println("------------------" + tokenizer.getClass().getSimpleName() + "------------------");
+//			new TestTrainWithMyModel(tokenizer);
+//		}
 		//
 		//// remove stopwords from files
 		// String subPath = path + "train/tokenized/" +

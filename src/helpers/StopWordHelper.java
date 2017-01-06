@@ -26,7 +26,7 @@ public class StopWordHelper {
 		    	if(Files.isDirectory(filePath)){
 		    		return; // don't continue if it is a directory
 		    	}
-				System.out.println("File: " + filePath.getFileName());
+//				System.out.println("File: " + filePath.getFileName());
 				
 				File file = new File(filePath.toString());
 				try {
@@ -35,7 +35,7 @@ public class StopWordHelper {
 					// Creates a file in "resources\test_data\set_0_99\train\removedStopwords\WhitespaceTokenizer\neg\test.txt"
 					Path removedStopwordsFile = Paths.get(filePath.getParent().getParent().getParent().getParent().toString() + "/removedStopwords/" + 
 							tokenizer.getClass().getSimpleName() + "/" + filePath.getParent().getFileName() + "/" + filePath.getFileName());
-					System.out.println(removedStopwordsFile.toString());
+//					System.out.println(removedStopwordsFile.toString());
 					
 					new File(removedStopwordsFile.getParent().toString()).mkdirs();
 					FileHelper.writeMapToFile(removedStopwordsFile.toString(), mapWords(bufferedReader, stopWords));

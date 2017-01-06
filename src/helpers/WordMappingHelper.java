@@ -23,16 +23,16 @@ public class WordMappingHelper {
 		    	}
 				Map<String, Integer> wordMapForFile = new HashMap<String, Integer>();
 				wordMapForFile = FileHelper.readFileToMap(filePath);
-				System.out.println("Word count for " + filePath.getFileName() + " -> " + wordMapForFile.size());
+//				System.out.println("Word count for " + filePath.getFileName() + " -> " + wordMapForFile.size());
 				wordMapForFile.forEach((k, v) ->
 					finalWordMap.merge(k, v, (v1, v2) -> v1 + v2));
 		    });
-		    System.out.println("Final word count: " + finalWordMap.size());
+//		    System.out.println("Final word count: " + finalWordMap.size());
 		    
 		    // Creates a file in "resources\test_data\set_0_99\train\removedStopwords\WhitespaceTokenizer\neg\test.txt"
 			Path wordMappedFile = Paths.get(Paths.get(aPath).getParent().getParent().getParent().toString() + "/wordMapped/" + 
 					tokenizer.getClass().getSimpleName() + "/" + Paths.get(aPath).getFileName() + ".txt");
-			System.out.println("Saved to: " + wordMappedFile.toString());
+//			System.out.println("Saved to: " + wordMappedFile.toString());
 			
 			new File(wordMappedFile.getParent().toString()).mkdirs();
 			FileHelper.writeMapToFile(wordMappedFile.toString(), finalWordMap);
