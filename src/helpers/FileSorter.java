@@ -25,11 +25,11 @@ public class FileSorter {
 		this.tokenizer = tokenizer;
 	}
 	
-	public void sort(String path) throws IOException {
+	public float[] sort(String path) throws IOException {
 		Map<String, Boolean> reviews = walkPath(path, "pos");
 		Map<String, Boolean> negatives = walkPath(path, "neg");
 		reviews.putAll(negatives);
-		sortAndPrintResult(reviews);
+		return sortAndPrintResult(reviews);
 		
 	}
 	
@@ -69,7 +69,7 @@ public class FileSorter {
 		return reviews;
 	}
 	
-	private void sortAndPrintResult(Map<String, Boolean> reviews) throws IOException {
+	private float[] sortAndPrintResult(Map<String, Boolean> reviews) throws IOException {
 		int errorCounterPositive = 0;
 		int errorCounterNegative = 0;
 		
@@ -83,9 +83,12 @@ public class FileSorter {
 			}
 		}
 
-		System.out.print("--------- Number of reviews: correct positive-> " + (100 - errorCounterPositive));
+		System.out.print("\t\t\tNumber of reviews: correct positive-> " + (100 - errorCounterPositive));
 		System.out.print("\tcorrect negative-> " + (100 - errorCounterNegative));
 		System.out.print("\tnegative instead of positive-> " + errorCounterPositive);
 		System.out.println("\tpositive instead of negative-> " + errorCounterNegative);
+		int tp = (100 - errorCounterPositive);
+		float[] precisionAndRecall = { ((float)tp / (float)(tp + errorCounterNegative)), ((float)tp / (float)100) };
+		return precisionAndRecall;
 	}
 }

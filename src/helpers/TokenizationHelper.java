@@ -19,9 +19,8 @@ public class TokenizationHelper {
 		try(Stream<Path> paths = Files.walk(Paths.get(aPath))) {
 		    paths.forEach(filePath -> {
 		    	if(!filePath.endsWith("neg")  && !filePath.endsWith("pos")) {
-				String fileContent;
 				try {
-					fileContent = readFile(filePath);
+					String fileContent = readFile(filePath);
 					String[] tokens = tokenizer.tokenize(fileContent);
 					
 					List<String> lines = Arrays.asList(tokens);
