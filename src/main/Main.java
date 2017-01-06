@@ -49,7 +49,7 @@ public class Main {
 		//// tokenize files
 		List<Tokenizer> tokenizers = (List<Tokenizer>) context.getBean("getTokenizer");
 		List<Analyzer> analyzers = (List<Analyzer>) context.getBean("getAnalyzer");
-
+		/*
 		for (String path : paths) {
 			System.out.println();
 			System.out.println("Starting with: " + path);
@@ -84,6 +84,7 @@ public class Main {
 			}
 
 		}
+		*/
 		
 //		for (Tokenizer tokenizer : tokenizers) {
 //			/* new try */
@@ -91,6 +92,8 @@ public class Main {
 //			System.out.println("------------------" + tokenizer.getClass().getSimpleName() + "------------------");
 //			new TestTrainWithMyModel(tokenizer);
 //		}
+		System.out.println("------------------" + tokenizers.get(0).getClass().getSimpleName() + "------------------");
+		new TestTrainWithMyModel(tokenizers.get(0));
 		//
 		//// remove stopwords from files
 		// String subPath = path + "train/tokenized/" +
