@@ -1,4 +1,5 @@
 /**/resources/**/*.txt
+/**/resources/**/*.csv
 .classpath
 .settings/**
 /bin/**

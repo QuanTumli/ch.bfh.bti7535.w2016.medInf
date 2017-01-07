@@ -31,7 +31,7 @@ public class WordMappingHelper {
 		    
 		    // Creates a file in "resources\test_data\set_0_99\train\removedStopwords\WhitespaceTokenizer\neg\test.txt"
 			Path wordMappedFile = Paths.get(Paths.get(aPath).getParent().getParent().getParent().toString() + "/wordMapped/" + 
-					tokenizer.getClass().getSimpleName() + "/" + Paths.get(aPath).getFileName() + ".txt");
+					tokenizer.getClass().getSimpleName() + "/" + Paths.get(aPath).getFileName() + ".csv");
 //			System.out.println("Saved to: " + wordMappedFile.toString());
 			
 			new File(wordMappedFile.getParent().toString()).mkdirs();

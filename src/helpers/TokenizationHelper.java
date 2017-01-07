@@ -11,16 +11,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+
 import opennlp.tools.tokenize.Tokenizer;
 
 public class TokenizationHelper {
 	
-	public static void tokenizeFilesInFolder(String aPath, Tokenizer tokenizer) throws IOException {
+	@Autowired
+	List<TextModifier> textModifiers;
+
+	public void tokenizeFilesInFolder(String aPath, Tokenizer tokenizer) throws IOException {
 		try(Stream<Path> paths = Files.walk(Paths.get(aPath))) {
 		    paths.forEach(filePath -> {
 		    	if(!filePath.endsWith("neg")  && !filePath.endsWith("pos")) {
 				try {
 					String fileContent = readFile(filePath);
+					for(TextModifier modifier : textModifiers) {
+						fileContent = modifier.modifyText(fileContent);
+					}
 					String[] tokens = tokenizer.tokenize(fileContent);
 					
 					List<String> lines = Arrays.asList(tokens);
@@ -53,5 +62,13 @@ public class TokenizationHelper {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void setTextModifiers(List<TextModifier> textModifiers) {
+		this.textModifiers = textModifiers;
+	}
+	
+	public List<TextModifier> getTextModifiers() {
+		return textModifiers;
 	}
 }

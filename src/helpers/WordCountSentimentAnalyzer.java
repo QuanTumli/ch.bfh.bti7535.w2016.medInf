@@ -1,5 +1,7 @@
 package helpers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.util.StringUtils;
@@ -11,8 +13,6 @@ public class WordCountSentimentAnalyzer extends Analyzer {
 	private Map<String, Integer> positives;
 	private Map<String, Integer> negatives;
 	
-	
-
 	public WordCountSentimentAnalyzer() {
 //		positives = positiveWordsAndWeights;
 //		negatives = negativeWordsAndWeights;
