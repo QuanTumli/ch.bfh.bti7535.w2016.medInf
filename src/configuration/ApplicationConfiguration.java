@@ -10,13 +10,15 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import features.NegationTextModifier;
-import features.TextModifier;
+import analyzers.WeightedWordCountSentimentAnalyzer;
+import analyzers.WordCountSentimentAnalyzer;
+import features.NegationFeature;
+import helpers.FeatureHelper;
+import helpers.KFoldHelper;
 import helpers.TokenizationHelper;
-import helpers.WeightedWordCountSentimentAnalyzer;
-import helpers.WordCountSentimentAnalyzer;
 import interfaces.Analyzer;
-import main.Application;
+import interfaces.Feature;
+import main.MyApplication;
 import opennlp.tools.sentdetect.SentenceDetector;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
@@ -30,23 +32,38 @@ public class ApplicationConfiguration {
 	
 	public final static String EN_TOKEN_MODEL = "resources/models/tokenization/en-token.bin";
 	public final static String EN_SENT_MODEL = "resources/models/sentenceDetection/en-sent.bin";
-
+	public final static int K_FOLD_VALUE = 10;
+	
 	@Bean
-	public String[] getPaths() {
-		return  new String[] { "resources/test_data/set_0_99/", "resources/test_data/set_100_199/",
-				"resources/test_data/set_200_299/", "resources/test_data/set_300_399/", "resources/test_data/set_400_499/",
-				"resources/test_data/set_500_599/", "resources/test_data/set_600_699/", "resources/test_data/set_700_799/",
-				"resources/test_data/set_800_899/", "resources/test_data/set_900_999/" };
+	public MyApplication getApplication() throws IOException {
+		MyApplication app = new MyApplication();
+		app.setKFoldHelper(getKeyFoldHelper());
+		app.setTokenizers(getTokenizers());
+		app.setAnalyzers(getAnalyzers());
+		app.setTokenizationHelper(getTokenizationHelper());
+		app.setFeatureHelper(getFeatureHelper());
+		return app;
 	}
 	
 	@Bean
-	public Application getApplication() {
-		Application a = new Application();
-		return a;
+	public List<Feature> getFeatures() {
+		return new ArrayList<Feature>() {{
+			add(getNegationTextModifier());
+		}};
+	}
+	
+	@Bean
+	public List<Analyzer> getAnalyzers() {
+		
+		return new ArrayList<Analyzer>() {{ 
+				add(new WordCountSentimentAnalyzer());
+				add(new WeightedWordCountSentimentAnalyzer());
+		
+			}};
 	}
 	
 	@Bean	
-	public List<Tokenizer> getTokenizer() throws IOException {
+	public List<Tokenizer> getTokenizers() throws IOException {
 		
 		return new ArrayList<Tokenizer>() {{
 			add(new TokenizerME(tokenizerModel()));
@@ -64,12 +81,8 @@ public class ApplicationConfiguration {
 	}
 	
 	@Bean
-	public List<Analyzer> getAnalyzer() {
-		return new ArrayList<Analyzer>() {{ 
-				add(new WordCountSentimentAnalyzer());
-				add(new WeightedWordCountSentimentAnalyzer());
-		
-			}};
+	public KFoldHelper getKeyFoldHelper() {
+		return new KFoldHelper(K_FOLD_VALUE);
 	}
 	
 	@Bean
@@ -95,16 +108,18 @@ public class ApplicationConfiguration {
 		return null;
 	}
 	
+
+	
 	@Bean
-	public List<TextModifier> getTextModifiers() {
-		return new ArrayList<TextModifier>() {{
-			add(getNegationTextModifier());
-		}};
+	public FeatureHelper getFeatureHelper() {
+		FeatureHelper f = new FeatureHelper();
+		f.setFeatures(getFeatures());
+		return f;
 	}
 	
 	@Bean
-	public NegationTextModifier getNegationTextModifier() {
-		NegationTextModifier m = new NegationTextModifier();
+	public NegationFeature getNegationTextModifier() {
+		NegationFeature m = new NegationFeature();
 		return m;
 	}
 

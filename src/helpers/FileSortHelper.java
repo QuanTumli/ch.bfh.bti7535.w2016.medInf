@@ -13,22 +13,23 @@ import java.util.stream.Stream;
 
 import features.TextModifier;
 import interfaces.Analyzer;
+import interfaces.Feature;
 import opennlp.tools.tokenize.Tokenizer;
 
-public class FileSorter {
+public class FileSortHelper {
 
 	Analyzer analyzer;
 	
 	Tokenizer tokenizer;
 	
-	List<TextModifier> textModifiers = new ArrayList<TextModifier>();
+	List<Feature> features = new ArrayList<Feature>();
 	
 	private int errorCounter = 0;
 	
-	public FileSorter(Analyzer analyzer, Tokenizer tokenizer, List<TextModifier> textModifiers) {
+	public FileSortHelper(Analyzer analyzer, Tokenizer tokenizer, List<Feature> features) {
 		this.analyzer = analyzer;
 		this.tokenizer = tokenizer;
-		this.textModifiers = textModifiers;
+		this.features = features;
 	}
 	
 	public float[] sort(String path) throws IOException {
@@ -48,9 +49,9 @@ public class FileSorter {
 					String fileContent;
 					try {
 						fileContent = new String(Files.readAllBytes(filePath));
-						for(TextModifier modifier : textModifiers) {
-							fileContent = modifier.modifyText(fileContent);
-						}
+//						for(Feature modifier : features) {
+//							fileContent = modifier.applyFeature(fileContent);
+//						}
 						reviews.put(fileContent, posOrNegAppendix.equals("pos"));
 						
 						// Sort files on filesystem
@@ -106,7 +107,7 @@ public class FileSorter {
 		return precisionAndRecall;
 	}
 	
-	public void setTextModifiers(List<TextModifier> textModifiers) {
-		this.textModifiers = textModifiers;
+	public void setTextModifiers(List<Feature> features) {
+		this.features = features;
 	}
 }

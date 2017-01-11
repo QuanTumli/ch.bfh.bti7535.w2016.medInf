@@ -1,4 +1,4 @@
-package helpers;
+package analyzers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +7,14 @@ import java.util.Map;
 import org.springframework.util.StringUtils;
 
 import interfaces.Analyzer;
+import opennlp.tools.postag.POSEvaluator;
 
-public class WordCountSentimentAnalyzer extends Analyzer {
+public class WeightedWordCountSentimentAnalyzer extends Analyzer {
 
 	private Map<String, Integer> positives;
 	private Map<String, Integer> negatives;
-	
-	public WordCountSentimentAnalyzer() {
+
+	public WeightedWordCountSentimentAnalyzer() {
 //		positives = positiveWordsAndWeights;
 //		negatives = negativeWordsAndWeights;
 //		List<String> keys = new ArrayList<String>();
@@ -38,23 +39,22 @@ public class WordCountSentimentAnalyzer extends Analyzer {
 	}
 
 	public int analyze(String message) {
-		message = message.toLowerCase();
+		
 		int countedPositivWords = 0;
 		int countedNegativWords = 0;
 		for (String positiveWord : positives.keySet()) {
-//			System.out.println(positiveWord + ": " + StringUtils.countOccurrencesOf(message, positiveWord));
-			countedPositivWords += StringUtils.countOccurrencesOf(message, positiveWord);
+			int count = StringUtils.countOccurrencesOf(message, positiveWord);
+			countedPositivWords += (count * positives.get(positiveWord));
 		}
 		for (String negativeWord : negatives.keySet()) {
-			countedNegativWords += StringUtils.countOccurrencesOf(message, negativeWord);
+			int count = StringUtils.countOccurrencesOf(message, negativeWord);
+			countedNegativWords += (count * negatives.get(negativeWord));
 		}
-		
 //		System.out.println(countedPositivWords + "/(" + countedPositivWords + "+" + countedNegativWords + ")="
 //				+ ((float) countedPositivWords / (float) (countedPositivWords + countedNegativWords)));
-//		System.out.println(positives.keySet().size() + " negs: " + negatives.keySet().size());
 		return ((float) countedPositivWords / (float) (countedPositivWords + countedNegativWords) > 0.5) ? 1 : -1;
 	}
-	
+
 	@Override
 	public void setPositiveWords(Map<String, Integer> positiveWords) {
 		this.positives = positiveWords;
@@ -66,5 +66,4 @@ public class WordCountSentimentAnalyzer extends Analyzer {
 		this.negatives = negativeWords;
 		
 	}
-
 }

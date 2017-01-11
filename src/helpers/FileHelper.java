@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+<<<<<<< Updated upstream
 public class FileHelper {
 	
 	public static List<String> readWordList(String fileName) {
@@ -37,6 +38,9 @@ public class FileHelper {
 		return null;
 	}
 	
+=======
+public class FileHelper {	
+>>>>>>> Stashed changes
 	public static List<String> getFileNamesFromFolder(String folderPath) {
 		try(Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
 			List<String> fileNames = new ArrayList<String>();
