@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import helpers.NegationTextModifier;
@@ -17,10 +16,10 @@ import helpers.TokenizationHelper;
 import helpers.WeightedWordCountSentimentAnalyzer;
 import helpers.WordCountSentimentAnalyzer;
 import interfaces.Analyzer;
+import main.Application;
 import opennlp.tools.sentdetect.SentenceDetector;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
@@ -31,6 +30,20 @@ public class ApplicationConfiguration {
 	
 	public final static String EN_TOKEN_MODEL = "resources/models/tokenization/en-token.bin";
 	public final static String EN_SENT_MODEL = "resources/models/sentenceDetection/en-sent.bin";
+
+	@Bean
+	public String[] getPaths() {
+		return  new String[] { "resources/test_data/set_0_99/", "resources/test_data/set_100_199/",
+				"resources/test_data/set_200_299/", "resources/test_data/set_300_399/", "resources/test_data/set_400_499/",
+				"resources/test_data/set_500_599/", "resources/test_data/set_600_699/", "resources/test_data/set_700_799/",
+				"resources/test_data/set_800_899/", "resources/test_data/set_900_999/" };
+	}
+	
+	@Bean
+	public Application getApplication() {
+		Application a = new Application();
+		return a;
+	}
 	
 	@Bean	
 	public List<Tokenizer> getTokenizer() throws IOException {
