@@ -12,12 +12,12 @@ import java.util.Map;
  * @author Kevin Tippenhauer
  *
  */
-public class MyModel {
+public class OurBayesClassifier {
 	
 	/**
      * The model
      */
-	private Map<String, MyWordList> myModel;
+	private Map<String, OurWordOccurences> myModel;
 	
 	/**
      * The actual count of total different words
@@ -28,8 +28,8 @@ public class MyModel {
      * Constructs a new MyModel and resets to default
      *
      */
-	public MyModel() {
-		this.myModel = new HashMap<String, MyWordList>();
+	public OurBayesClassifier() {
+		this.myModel = new HashMap<String, OurWordOccurences>();
 		this.totalWords = 0;
 	}
 	
@@ -54,9 +54,9 @@ public class MyModel {
      * @param wordList The words to learn
      */
 	public void learn(String category, String word) {
-		MyWordList categoryList = this.myModel.get(category);
+		OurWordOccurences categoryList = this.myModel.get(category);
 		if(categoryList == null){
-			this.myModel.put(category, new MyWordList()); // create new categoryList
+			this.myModel.put(category, new OurWordOccurences()); // create new categoryList
 			categoryList = this.myModel.get(category);
 		}
 		if(categoryList.getCount(word) == 0){
@@ -86,7 +86,7 @@ public class MyModel {
 	}
 	
 	/**
-     * Retrieves the current word count in a category
+     * Retrieves the current word probability to be in category
      *
      * @param category The category of the word
      * @param word The word

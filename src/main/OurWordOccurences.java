@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Kevin Tippenhauer
  *
  */
-public class MyWordList {
+public class OurWordOccurences {
 	
 	/**
      * The word list with words and it's count of occurrences
@@ -22,7 +22,7 @@ public class MyWordList {
      * Constructs a new MyWordList and resets to default
      *
      */
-	public MyWordList() {
+	public OurWordOccurences() {
 		this.wordOccurence = new HashMap<String, Integer>();;
 	}
 	

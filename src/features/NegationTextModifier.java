@@ -1,4 +1,4 @@
-package helpers;
+package features;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

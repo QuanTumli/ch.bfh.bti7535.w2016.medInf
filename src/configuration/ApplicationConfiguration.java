@@ -10,8 +10,8 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import helpers.NegationTextModifier;
-import helpers.TextModifier;
+import features.NegationTextModifier;
+import features.TextModifier;
 import helpers.TokenizationHelper;
 import helpers.WeightedWordCountSentimentAnalyzer;
 import helpers.WordCountSentimentAnalyzer;
@@ -60,13 +60,11 @@ public class ApplicationConfiguration {
 	@Bean
 	public TokenizationHelper getTokenizationHelper() {
 		TokenizationHelper helper = new TokenizationHelper();
-		
 		return helper;
 	}
 	
 	@Bean
 	public List<Analyzer> getAnalyzer() {
-		
 		return new ArrayList<Analyzer>() {{ 
 				add(new WordCountSentimentAnalyzer());
 				add(new WeightedWordCountSentimentAnalyzer());

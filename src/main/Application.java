@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import features.Negation;
+import features.StopWords;
 import helpers.FileHelper;
 import helpers.FileSorter;
 import helpers.TokenizationHelper;
@@ -28,6 +30,10 @@ public class Application {
 
 	@Autowired
 	TokenizationHelper tokenizationHelper;
+	
+	// get all features
+	Negation featureNegation = new Negation();
+	StopWords featureStopWords = new StopWords();
 
 	static Map<String, float[]> results = new HashMap<String, float[]>();
 
@@ -143,18 +149,28 @@ public class Application {
 		this.tokenizationHelper = tokenizationHelper;
 	}
 
-	public void runOurNaiveBayesAnalysis() throws IOException {
-		 for (Tokenizer tokenizer : tokenizers) {
-		 /* new try */
-		 // new TestTrainWithBayes(tokenizer);
-		 System.out.println("------------------" +
-		 tokenizer.getClass().getSimpleName() + "------------------");
-		 new TestTrainWithMyModel(tokenizer);
-		 }
-		 System.out.println("------------------" +
+	public void runOurNaiveBayesAnalysis() throws IOException {		
+		// configure features
+		featureStopWords.addStopWordsList(FileHelper.readWordList("resources/stop-word-list.txt"));
+		featureStopWords.addStopWordsList(FileHelper.readWordList("resources/special-chars-list.txt"));
+		
+		/*for (Tokenizer tokenizer : tokenizers) {
+			 System.out.println("------------------" +
+			 tokenizer.getClass().getSimpleName() + "------------------");
+			 new TestTrainWithMyModel(tokenizer);
+		 }*/
+		 
+		 /*System.out.println("------------------" +
 		 tokenizers.get(0).getClass().getSimpleName() + "------------------");
 		 new TestTrainWithMyModel(tokenizers.get(0));
-
+		*/
+		TestTrainWithMyModel myModel = new TestTrainWithMyModel();
+		myModel.addTokenizer(tokenizers.get(0));
+		myModel.addFeature(featureNegation);
+		myModel.addFeature(featureStopWords);
+		
+		myModel.analyze();
+		
 //		 String posWords = path + "train/wordMapped/" +
 //		 tokenizer.getClass().getSimpleName() + "/pos.txt"; String negWords =
 //		 path + "train/wordMapped/" + tokenizer.getClass().getSimpleName() +

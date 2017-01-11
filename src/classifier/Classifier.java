@@ -363,7 +363,7 @@ public abstract class Classifier<T, K> implements IFeatureProbability<T, K> {
         if (totals == null)
             totals = 0;
         return (weight * assumedProbability + totals  * basicProbability)
-                / (weight + totals);
+                / (weight + totals) + 1.0f;
     }
 
     /**

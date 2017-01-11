@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 
+import features.TextModifier;
 import opennlp.tools.tokenize.Tokenizer;
 
 public class TokenizationHelper {

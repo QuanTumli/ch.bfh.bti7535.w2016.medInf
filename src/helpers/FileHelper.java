@@ -21,6 +21,22 @@ import java.util.stream.Stream;
 
 public class FileHelper {
 	
+	public static List<String> readWordList(String fileName) {
+		List<String> stopWordList = new ArrayList<String>();
+		BufferedReader stopWordReader = FileHelper.readFile(fileName);
+		String inputLine;
+		try {
+			while ((inputLine = stopWordReader.readLine()) != null) {
+				stopWordList.add(inputLine);
+			}
+			return stopWordList;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static List<String> getFileNamesFromFolder(String folderPath) {
 		try(Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
 			List<String> fileNames = new ArrayList<String>();

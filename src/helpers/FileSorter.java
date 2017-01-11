@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import features.TextModifier;
 import interfaces.Analyzer;
 import opennlp.tools.tokenize.Tokenizer;
 
