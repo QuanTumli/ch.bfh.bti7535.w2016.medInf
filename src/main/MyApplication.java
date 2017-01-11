@@ -208,8 +208,6 @@ public class MyApplication {
 		}
 
 	}
-	
-	private void 
 
 	public void setTokenizers(List<Tokenizer> tokenizers) {
 		this.tokenizers = tokenizers;
