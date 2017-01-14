@@ -104,7 +104,7 @@ public class MyApplication {
 		List<CountedWordList> positiveWordLists = new ArrayList<CountedWordList>();
 
 		System.out.println("-------------------------------------------");
-		System.out.println("Creating Models");
+		System.out.print("Creating Models");
 		
 		for (FeatureizedTestSet set : featureizedTestSets) {
 			String name = getAbsoluteSetName(set);
@@ -126,6 +126,7 @@ public class MyApplication {
 				FileHelper.writeMapToFile(path + list.getName() + ".txt", list.getWordList());
 			}
 		}
+		System.out.println();
 	}
 	
 	/**
