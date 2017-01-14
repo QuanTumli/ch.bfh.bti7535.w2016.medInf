@@ -21,7 +21,7 @@ import opennlp.tools.tokenize.Tokenizer;
 public class TokenizationHelper {
 
 	/** The tokenizers. */
-	List<Tokenizer> tokenizers;
+	static List<Tokenizer> tokenizers;
 
 	/**
 	 * Tokenize test sets.
@@ -99,6 +99,15 @@ public class TokenizationHelper {
 	 * @param tokenizers the new tokenizers
 	 */
 	public void setTokenizers(List<Tokenizer> tokenizers) {
-		this.tokenizers = tokenizers;
+		TokenizationHelper.tokenizers = tokenizers;
+	}
+	
+	/**
+	 * Gets the tokenizers.
+	 *
+	 * @return tokenizers the tokenizers
+	 */
+	public static List<Tokenizer> getTokenizers() {
+		return tokenizers;
 	}
 }
