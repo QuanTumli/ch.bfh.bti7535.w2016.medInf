@@ -5,8 +5,18 @@ import java.util.List;
 
 import models.CountedWordList;
 
+/**
+ * The Class WordListCreator.
+ */
 public class WordListCreator {
 
+	/**
+	 * Creates the word list.
+	 *
+	 * @param name the name
+	 * @param reviewMessages the review messages
+	 * @return the counted word list
+	 */
 	public static CountedWordList createWordList(String name, Collection<List<String>> reviewMessages) {
 		CountedWordList wordList = new CountedWordList(name);
 	
@@ -22,7 +32,6 @@ public class WordListCreator {
 				wordList.addWord(word);	
 			}
 		}
-		
 		return wordList;
 	}
 }

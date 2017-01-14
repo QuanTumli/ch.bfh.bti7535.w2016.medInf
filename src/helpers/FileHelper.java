@@ -21,24 +21,17 @@ import java.util.stream.Stream;
 
 import models.CountedWordList;
 
+/**
+ * The Class FileHelper.
+ */
 public class FileHelper {
 
-	public static List<String> readWordList(String fileName) {
-		List<String> stopWordList = new ArrayList<String>();
-		BufferedReader stopWordReader = FileHelper.readFile(fileName);
-		String inputLine;
-		try {
-			while ((inputLine = stopWordReader.readLine()) != null) {
-				stopWordList.add(inputLine);
-			}
-			return stopWordList;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
+	/**
+	 * Gets the file names from folder.
+	 *
+	 * @param folderPath the folder path
+	 * @return the file names from folder
+	 */
 	public static List<String> getFileNamesFromFolder(String folderPath) {
 		try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
 			List<String> fileNames = new ArrayList<String>();
@@ -49,17 +42,29 @@ public class FileHelper {
 			});
 			return fileNames;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		;
 		return null;
 	}
 
+	/**
+	 * Read file to string.
+	 *
+	 * @param filePath the file path
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static String readFileToString(Path filePath) throws IOException {
 		return new String(Files.readAllBytes(filePath));
 	}
 
+	/**
+	 * Read file.
+	 *
+	 * @param fileName the file name
+	 * @return the buffered reader
+	 */
 	public static BufferedReader readFile(String fileName) {
 		File file = new File(fileName);
 		try {
@@ -71,6 +76,12 @@ public class FileHelper {
 		return null;
 	}
 
+	/**
+	 * Write map to file.
+	 *
+	 * @param newFile the new file
+	 * @param wordMap the word map
+	 */
 	public static void writeMapToFile(String newFile, Map<String, Integer> wordMap) {
 		Writer writer = null;
 		try {
@@ -82,28 +93,26 @@ public class FileHelper {
 				writer.write(word + "\t" + count + "\n");
 			}
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				writer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public static Map<String, Integer> readFileToMap(Path filePath) {
-		return readFileToMap(filePath.toString());
-	}
-
+	/**
+	 * Read file to map.
+	 *
+	 * @param filePath the file path
+	 * @return the map
+	 */
 	public static Map<String, Integer> readFileToMap(String filePath) {
 		BufferedReader bufferedReader = readFile(filePath);
 		String inputLine = null;
@@ -121,12 +130,18 @@ public class FileHelper {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return wordMap;
 	}
 
+	/**
+	 * Read models.
+	 *
+	 * @param folderPath the folder path
+	 * @return the list
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static List<CountedWordList> readModels(String folderPath) throws IOException {
 		try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
 			List<CountedWordList> countedWordLists = new ArrayList<CountedWordList>();
@@ -134,7 +149,7 @@ public class FileHelper {
 				if (!Files.isDirectory(filePath)) {
 					String filename = filePath.getFileName().toString().replaceAll(".txt", "");
 					CountedWordList list = new CountedWordList(filename);
-					list.getWordList().putAll(FileHelper.readFileToMap(filePath));
+					list.getWordList().putAll(FileHelper.readFileToMap(filePath.toString()));
 					countedWordLists.add(list);
 				}
 			});

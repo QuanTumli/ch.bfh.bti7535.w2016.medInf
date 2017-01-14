@@ -7,10 +7,20 @@ import interfaces.Feature;
 import models.FeatureizedTestSet;
 import models.TokenizedTestSet;
 
+/**
+ * The Class FeatureHelper.
+ */
 public class FeatureHelper {
 
+	/** The features. */
 	List<Feature> features;
 
+	/**
+	 * Featureize test sets.
+	 *
+	 * @param tokenizedTestSets the tokenized test sets
+	 * @return the list
+	 */
 	public List<FeatureizedTestSet> featureizeTestSets(List<TokenizedTestSet> tokenizedTestSets) {
 		List<FeatureizedTestSet> featureizedTestSets = new ArrayList<FeatureizedTestSet>();
 		
@@ -41,10 +51,20 @@ public class FeatureHelper {
 		return featureizedTestSets;
 	}
 
+	/**
+	 * Gets the features.
+	 *
+	 * @return the features
+	 */
 	public List<Feature> getFeatures() {
 		return features;
 	}
 
+	/**
+	 * Sets the features.
+	 *
+	 * @param features the new features
+	 */
 	public void setFeatures(List<Feature> features) {
 		this.features = features;
 	}

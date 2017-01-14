@@ -5,14 +5,30 @@ import java.util.List;
 
 import models.TestSet;
 
+/**
+ * The Class KFoldHelper.
+ */
 public class KFoldHelper {
 
+	/** The k fold value. */
 	private int kFoldValue;
 
+	/**
+	 * Instantiates a new k fold helper.
+	 *
+	 * @param kFoldValue the k fold value
+	 */
 	public KFoldHelper(int kFoldValue) {
 		setKFoldValue(kFoldValue);
 	}
 
+	/**
+	 * K fold files.
+	 *
+	 * @param negativeReviewsPath the negative reviews path
+	 * @param positiveReviewsPath the positive reviews path
+	 * @return the list
+	 */
 	public List<TestSet> kFoldFiles(String negativeReviewsPath, String positiveReviewsPath) {
 		List<String> documentsPos = FileHelper.getFileNamesFromFolder(positiveReviewsPath);
 		List<String> documentsNeg = FileHelper.getFileNamesFromFolder(negativeReviewsPath);
@@ -28,8 +44,6 @@ public class KFoldHelper {
 			int startPosFile = i * sizeOfKFoldPos;
 			int endPosFile = sizeOfKFoldPos + i * sizeOfKFoldPos;
 
-			// for testing
-			// if(i==1) break;
 			System.out.println("K-Fold " + (i + 1) + "/" + kFoldValue + " " + sizeOfKFoldNeg);
 
 			// - pick 1-100 docs (pos&neg) as TEST
@@ -57,10 +71,20 @@ public class KFoldHelper {
 		return testSets;
 	}
 
+	/**
+	 * Gets the k fold value.
+	 *
+	 * @return the k fold value
+	 */
 	public int getKFoldValue() {
 		return kFoldValue;
 	}
 
+	/**
+	 * Sets the k fold value.
+	 *
+	 * @param kFoldValue the new k fold value
+	 */
 	public void setKFoldValue(int kFoldValue) {
 		this.kFoldValue = kFoldValue;
 	}

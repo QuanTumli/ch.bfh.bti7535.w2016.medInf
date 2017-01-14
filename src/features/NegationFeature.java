@@ -3,18 +3,23 @@ package features;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import interfaces.Feature;
-import opennlp.tools.sentdetect.SentenceDetector;
 
+/**
+ * The Class NegationFeature.
+ */
 public class NegationFeature extends Feature {
 
-	@Autowired
-	SentenceDetector sentenceDetector;
-
+	/** The shared counter. */
 	private int shared_counter = 0;
 
+	/**
+	 * Handle negation until punctuation.
+	 *
+	 * @param i the i
+	 * @param tokens the tokens
+	 * @return the list
+	 */
 	private List<String> handleNegationUntilPunctuation(int i, List<String> tokens) {
 		shared_counter = 0;
 		for (int j = 0; j < tokens.size() - i; j++) {
@@ -59,15 +64,18 @@ public class NegationFeature extends Feature {
 		return tokens;
 	}
 
+	/* (non-Javadoc)
+	 * @see interfaces.Feature#applyFeature(java.util.Map)
+	 */
+	@Override
 	public Map<String, List<String>> applyFeature(Map<String, List<String>> map) {
 		for (String key : map.keySet()) {
 			List<String> tokens = map.get(key);
-			// int i = 0;
+			// Following not occurences are captured, ", " is used to separed tokens in this comment.
 			// n't
 			// not
 			// xxxn, 't
 			// xxxn, ', t
-
 			for (int i = 0; i < tokens.size(); i++) {
 				if (tokens.get(i).endsWith("n't")) {
 					tokens.set(i, "NOT_" + tokens.get(i).substring(0, tokens.get(i).length() - 3));
@@ -113,9 +121,4 @@ public class NegationFeature extends Feature {
 		}
 		return map;
 	}
-
-	public void setSentenceDetector(SentenceDetector sentenceDetector) {
-		this.sentenceDetector = sentenceDetector;
-	}
-
 }

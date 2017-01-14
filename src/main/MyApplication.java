@@ -19,39 +19,85 @@ import models.FeatureizedTestSet;
 import models.TestSet;
 import models.TokenizedTestSet;
 
+/**
+ * The Class MyApplication.
+ */
 public class MyApplication {
 
-//	List<Tokenizer> tokenizers; I plan to remove tokenizers from this class, Kevin
+/** The analyzers. */
 	List<Analyzer> analyzers;
+	
+	/** The tokenization helper. */
 	TokenizationHelper tokenizationHelper;
+	
+	/** The k fold helper. */
 	KFoldHelper kFoldHelper;
+	
+	/** The feature helper. */
 	FeatureHelper featureHelper;
 	
+	/** The positive word lists. */
 	List<CountedWordList> positiveWordLists;
+	
+	/** The negative word lists. */
 	List<CountedWordList> negativeWordLists;
 	
+	/** The results. */
 	static Map<String, float[]> results = new HashMap<String, float[]>();
 
+	/** The reviews path. */
 	private String reviewsPath;
+	
+	/** The model path. */
 	private String modelPath;
 
+	/**
+	 * Do K fold files in folder.
+	 *
+	 * @return the list
+	 */
 	public List<TestSet> doKFoldFilesInFolder() {
 		return doKFoldFilesInFolder(this.reviewsPath);
 	}
 	
+	/**
+	 * Do K fold files in folder.
+	 *
+	 * @param reviewsPath the reviews path
+	 * @return the list
+	 */
 	public List<TestSet> doKFoldFilesInFolder(String reviewsPath) {
 		return kFoldHelper.kFoldFiles(reviewsPath + "neg/", reviewsPath + "pos/");
 	}
 
+	/**
+	 * Tokenize test sets.
+	 *
+	 * @param testSets the test sets
+	 * @return the list
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public List<TokenizedTestSet> tokenizeTestSets(List<TestSet> testSets) throws IOException {
 		return tokenizationHelper.tokenizeTestSets(testSets, reviewsPath + "neg/", reviewsPath + "pos/");
 	}
 
+	/**
+	 * Featureize tokenized test sets.
+	 *
+	 * @param tokenizedTestSets the tokenized test sets
+	 * @return the list
+	 */
 	public List<FeatureizedTestSet> featureizeTokenizedTestSets(List<TokenizedTestSet> tokenizedTestSets) {
 		return featureHelper.featureizeTestSets(tokenizedTestSets);
 		
 	}
 
+	/**
+	 * Run model creation.
+	 *
+	 * @param featureizedTestSets the featureized test sets
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void runModelCreation(List<FeatureizedTestSet> featureizedTestSets) throws IOException {
 		List<CountedWordList> negativeWordLists = new ArrayList<CountedWordList>();
 		List<CountedWordList> positiveWordLists = new ArrayList<CountedWordList>();
@@ -81,11 +127,22 @@ public class MyApplication {
 		}
 	}
 	
+	/**
+	 * Load models.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void loadModels() throws IOException {
 		this.positiveWordLists = FileHelper.readModels(this.modelPath + "pos/");
 		this.negativeWordLists = FileHelper.readModels(this.modelPath + "neg/");	
 	}
 	
+	/**
+	 * Gets the absolute set name.
+	 *
+	 * @param set the set
+	 * @return the absolute set name
+	 */
 	private String getAbsoluteSetName(FeatureizedTestSet set) {
 		String name = set.getName() + "+" + set.getTokenizer().getSimpleName() + "-";
 		for (Class<?> c : set.getFeatures()) {
@@ -94,6 +151,12 @@ public class MyApplication {
 		return name;
 	}
 
+	/**
+	 * Test word count analysis.
+	 *
+	 * @param featureizedTestSets the featureized test sets
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void testWordCountAnalysis(List<FeatureizedTestSet> featureizedTestSets) throws IOException {
 		Map<String, FeatureizedTestSet> mapTestSets = new HashMap<String, FeatureizedTestSet>();
 		for(FeatureizedTestSet set : featureizedTestSets) {
@@ -106,11 +169,9 @@ public class MyApplication {
 			results.put(negativeWordList.getName().split("\\+")[1], new float[]{0,0,0});
 		}
 		
-		
 		for(Analyzer analyzer : this.analyzers) {
 			
 			for(CountedWordList positiveWordList : this.positiveWordLists) {
-//				System.out.println("Start test with: " + analyzer.getClass().getSimpleName() + " on model: " + positiveWordList.getName());
 			
 				int falsePositive = 0;
 				int falseNegative = 0;
@@ -156,26 +217,56 @@ public class MyApplication {
 		}
 	}
 
+	/**
+	 * Sets the analyzers.
+	 *
+	 * @param analyzers the new analyzers
+	 */
 	public void setAnalyzers(List<Analyzer> analyzers) {
 		this.analyzers = analyzers;
 	}
 
+	/**
+	 * Gets the review path.
+	 *
+	 * @return the review path
+	 */
 	public String getReviewPath() {
 		return reviewsPath;
 	}
 
+	/**
+	 * Sets the k fold helper.
+	 *
+	 * @param kFoldHelper the new k fold helper
+	 */
 	public void setKFoldHelper(KFoldHelper kFoldHelper) {
 		this.kFoldHelper = kFoldHelper;
 	}
 
+	/**
+	 * Sets the tokenization helper.
+	 *
+	 * @param tokenizationHelper the new tokenization helper
+	 */
 	public void setTokenizationHelper(TokenizationHelper tokenizationHelper) {
 		this.tokenizationHelper = tokenizationHelper;
 	}
 
+	/**
+	 * Sets the reviews path.
+	 *
+	 * @param reviewsPath the new reviews path
+	 */
 	public void setReviewsPath(String reviewsPath) {
 		this.reviewsPath = reviewsPath;
 	}
 
+	/**
+	 * Run our naive bayes analysis.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void runOurNaiveBayesAnalysis() throws IOException {
 //		for (Tokenizer tokenizer : tokenizers) {
 			/* new try */
@@ -197,30 +288,65 @@ public class MyApplication {
 
 	}
 
+	/**
+	 * Sets the feature helper.
+	 *
+	 * @param featureHelper the new feature helper
+	 */
 	public void setFeatureHelper(FeatureHelper featureHelper) {
 		this.featureHelper = featureHelper;
 	}
 
+	/**
+	 * Gets the model path.
+	 *
+	 * @return the model path
+	 */
 	public String getModelPath() {
 		return modelPath;
 	}
 
+	/**
+	 * Sets the model path.
+	 *
+	 * @param modelPath the new model path
+	 */
 	public void setModelPath(String modelPath) {
 		this.modelPath = modelPath;
 	}
 
+	/**
+	 * Gets the positive word lists.
+	 *
+	 * @return the positive word lists
+	 */
 	public List<CountedWordList> getPositiveWordLists() {
 		return positiveWordLists;
 	}
 
+	/**
+	 * Gets the negative word lists.
+	 *
+	 * @return the negative word lists
+	 */
 	public List<CountedWordList> getNegativeWordLists() {
 		return negativeWordLists;
 	}
 
+	/**
+	 * Sets the positive word lists.
+	 *
+	 * @param positiveWordLists the new positive word lists
+	 */
 	public void setPositiveWordLists(List<CountedWordList> positiveWordLists) {
 		this.positiveWordLists = positiveWordLists;
 	}
 
+	/**
+	 * Sets the negative word lists.
+	 *
+	 * @param negativeWordLists the new negative word lists
+	 */
 	public void setNegativeWordLists(List<CountedWordList> negativeWordLists) {
 		this.negativeWordLists = negativeWordLists;
 	}

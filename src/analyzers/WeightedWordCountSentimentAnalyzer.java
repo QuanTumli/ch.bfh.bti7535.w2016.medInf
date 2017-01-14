@@ -5,35 +5,27 @@ import java.util.List;
 import interfaces.Analyzer;
 import models.CountedWordList;
 
+/**
+ * The Class WeightedWordCountSentimentAnalyzer.
+ */
 public class WeightedWordCountSentimentAnalyzer extends Analyzer {
 
+	/** The positives. */
 	private CountedWordList positives;
+	
+	/** The negatives. */
 	private CountedWordList negatives;
 
+	/**
+	 * Instantiates a new weighted word count sentiment analyzer.
+	 */
 	public WeightedWordCountSentimentAnalyzer() {
-//		positives = positiveWordsAndWeights;
-//		negatives = negativeWordsAndWeights;
-//		List<String> keys = new ArrayList<String>();
-//		for(String key : positives.keySet()) {
-//			int weight = negatives.getOrDefault(key, 0);
-////			System.out.println("1: " + key);
-////			System.out.println("2: " + negatives.getOrDefault(key, 0));
-////			System.out.println("3: " + positives.get(key));
-////			System.out.println("4: " + Math.pow(weight - positives.get(key), 2));
-////			System.out.println("5: " + (weight + positives.get(key)) * 0.1);
-////			if(Math.sqrt(Math.pow(weight - positives.get(key), 2)) < (weight + positives.get(key)) * 0.1) {
-////				keys.add(key);
-////			}
-//			if(weight != 0) {
-//				keys.add(key);
-//			}
-//		}
-//	    keys.forEach(key -> {
-//	    	positives.remove(key);
-//	    	negatives.remove(key);
-//	    });
 	}
 
+	/* (non-Javadoc)
+	 * @see interfaces.Analyzer#analyze(java.util.List)
+	 */
+	@Override
 	public boolean analyze(List<String> featureizedTokens) {
 		int countedPositiveWords = 0;
 		int countedNegativeWords = 0;
@@ -49,12 +41,18 @@ public class WeightedWordCountSentimentAnalyzer extends Analyzer {
 		return ((float) countedPositiveWords / (float) (countedPositiveWords + countedNegativeWords) > 0.5) ? true : false;
 	}
 
+	/* (non-Javadoc)
+	 * @see interfaces.Analyzer#setPositiveWords(models.CountedWordList)
+	 */
 	@Override
 	public void setPositiveWords(CountedWordList positiveWords) {
 		this.positives = positiveWords;
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see interfaces.Analyzer#setNegativeWords(models.CountedWordList)
+	 */
 	@Override
 	public void setNegativeWords(CountedWordList negativeWords) {
 		this.negatives = negativeWords;

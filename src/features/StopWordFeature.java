@@ -18,10 +18,14 @@ import helpers.FileHelper;
 import interfaces.Feature;
 import opennlp.tools.tokenize.Tokenizer;
 
+/**
+ * The Class StopWordFeature.
+ */
 public class StopWordFeature extends Feature {
-
 	
-	
+	/* (non-Javadoc)
+	 * @see interfaces.Feature#applyFeature(java.util.Map)
+	 */
 	@Override
 	public Map<String, List<String>> applyFeature(Map<String, List<String>> map) {
 		List<String> stopWords =  readStopWordList("resources/stop-word-list-old.txt");
@@ -30,6 +34,14 @@ public class StopWordFeature extends Feature {
 		}
 		return map;
 	}
+	
+	/**
+	 * Removes the stop words for files in folder.
+	 *
+	 * @param aPath the a path
+	 * @param tokenizer the tokenizer
+	 */
+	@Deprecated
 	public static void removeStopWordsForFilesInFolder(String aPath, Tokenizer tokenizer) {
 		List<String> stopWords =  readStopWordList("resources/stop-word-list-old.txt");
 		
@@ -59,11 +71,18 @@ public class StopWordFeature extends Feature {
 				
 		    });
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Map words.
+	 *
+	 * @param bufferedReader the buffered reader
+	 * @param stopWords the stop words
+	 * @return the map
+	 */
+	@Deprecated
 	public static Map<String, Integer> mapWords(BufferedReader bufferedReader, List<String> stopWords) {
 		String inputLine = null;
 		Map<String, Integer> wordMap = new HashMap<String, Integer>();
@@ -104,6 +123,12 @@ public class StopWordFeature extends Feature {
 		return null;
 	}
 	
+	/**
+	 * Read stop word list.
+	 *
+	 * @param fileName the file name
+	 * @return the list
+	 */
 	private static List<String> readStopWordList(String fileName) {
 		List<String> stopWordList = new ArrayList<String>();
 		BufferedReader stopWordReader = FileHelper.readFile(fileName);
@@ -114,7 +139,6 @@ public class StopWordFeature extends Feature {
 			}
 			return stopWordList;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

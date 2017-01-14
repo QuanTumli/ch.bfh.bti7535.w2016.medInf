@@ -1,7 +1,6 @@
 package configuration;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,27 +19,34 @@ import helpers.TokenizationHelper;
 import interfaces.Analyzer;
 import interfaces.Feature;
 import main.MyApplication;
-import opennlp.tools.sentdetect.SentenceDetector;
-import opennlp.tools.sentdetect.SentenceDetectorME;
-import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
 
+/**
+ * The Class ApplicationConfiguration.
+ */
 @Configuration
 public class ApplicationConfiguration {
 	
-	public final static String EN_TOKEN_MODEL = "resources/models/tokenization/en-token.bin";
-	public final static String EN_SENT_MODEL = "resources/models/sentenceDetection/en-sent.bin";
-	public final static int K_FOLD_VALUE = 10;
+	/** The Constant EN_TOKEN_MODEL. */
+	private final static String EN_TOKEN_MODEL = "resources/models/tokenization/en-token.bin";
 	
+	/** The Constant K_FOLD_VALUE. */
+	private final static int K_FOLD_VALUE = 10;
+	
+	/**
+	 * Gets the application.
+	 *
+	 * @return the application
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Bean
 	public MyApplication getApplication() throws IOException {
 		MyApplication app = new MyApplication();
 		app.setKFoldHelper(getKeyFoldHelper());
-//		app.setTokenizers(getTokenizers());
 		app.setAnalyzers(getAnalyzers());
 		app.setTokenizationHelper(getTokenizationHelper());
 		app.setFeatureHelper(getFeatureHelper());
@@ -48,6 +54,11 @@ public class ApplicationConfiguration {
 	}
 	
 	
+	/**
+	 * Gets the features.
+	 *
+	 * @return the features
+	 */
 	@SuppressWarnings("serial")
 	private List<Feature> getFeatures() {
 		return new ArrayList<Feature>() {{
@@ -56,20 +67,27 @@ public class ApplicationConfiguration {
 		}};
 	}
 	
+	/**
+	 * Gets the analyzers.
+	 *
+	 * @return the analyzers
+	 */
 	@SuppressWarnings("serial")
-	@Bean
-	public List<Analyzer> getAnalyzers() {
-		
+	private List<Analyzer> getAnalyzers() {
 		return new ArrayList<Analyzer>() {{ 
 				add(new WordCountSentimentAnalyzer());
 				add(new WeightedWordCountSentimentAnalyzer());
 			}};
 	}
 	
+	/**
+	 * Gets the tokenizers.
+	 *
+	 * @return the tokenizers
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@SuppressWarnings("serial")
-	@Bean	
-	public List<Tokenizer> getTokenizers() throws IOException {
-		
+	private List<Tokenizer> getTokenizers() throws IOException {
 		return new ArrayList<Tokenizer>() {{
 			add(new TokenizerME(tokenizerModel()));
 			add(SimpleTokenizer.INSTANCE);
@@ -77,60 +95,63 @@ public class ApplicationConfiguration {
 		}};
 	}
 	
-	@Bean
-	public TokenizationHelper getTokenizationHelper() throws IOException {
+	/**
+	 * Gets the tokenization helper.
+	 *
+	 * @return the tokenization helper
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private TokenizationHelper getTokenizationHelper() throws IOException {
 		TokenizationHelper helper = new TokenizationHelper();
 		helper.setTokenizers(getTokenizers());
 		return helper;
 	}
 	
-	@Bean
-	public KFoldHelper getKeyFoldHelper() {
+	/**
+	 * Gets the key fold helper.
+	 *
+	 * @return the key fold helper
+	 */
+	private KFoldHelper getKeyFoldHelper() {
 		return new KFoldHelper(K_FOLD_VALUE);
 	}
 	
-	@Bean
-	public SentenceDetector getSentenceDetector() throws FileNotFoundException {
-		InputStream modelIn = new FileInputStream(EN_SENT_MODEL);
-
-		try {
-		  SentenceModel model = new SentenceModel(modelIn);
-		  return new SentenceDetectorME(model);
-		}
-		catch (IOException e) {
-		  e.printStackTrace();
-		}
-		finally {
-		  if (modelIn != null) {
-		    try {
-		      modelIn.close();
-		    }
-		    catch (IOException e) {
-		    }
-		  }
-		}
-		return null;
-	}
-	
-
-	
-	@Bean
-	public FeatureHelper getFeatureHelper() {
+	/**
+	 * Gets the feature helper.
+	 *
+	 * @return the feature helper
+	 */
+	private FeatureHelper getFeatureHelper() {
 		FeatureHelper f = new FeatureHelper();
 		f.setFeatures(getFeatures());
 		return f;
 	}
 	
-	public NegationFeature getNegationFeature() {
+	/**
+	 * Gets the negation feature.
+	 *
+	 * @return the negation feature
+	 */
+	private NegationFeature getNegationFeature() {
 		NegationFeature m = new NegationFeature();
 		return m;
 	}
 	
-	public Feature getStopWordFeature() {
+	/**
+	 * Gets the stop word feature.
+	 *
+	 * @return the stop word feature
+	 */
+	private Feature getStopWordFeature() {
 		return new StopWordFeature();
 	}
-	
 
+	/**
+	 * Tokenizer model.
+	 *
+	 * @return the tokenizer model
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private TokenizerModel tokenizerModel() throws IOException {
 		InputStream modelIn = new FileInputStream(EN_TOKEN_MODEL);
 		TokenizerModel model;
@@ -150,7 +171,6 @@ public class ApplicationConfiguration {
 		    }
 		  }
 		}
-
 		return null;
 	}
 }

@@ -11,12 +11,26 @@ import configuration.ApplicationConfiguration;
 import models.CountedWordList;
 import models.FeatureizedTestSet;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Main.
+ */
 public class Main {
 
+	/** The Constant reviewsPath. */
 	public final static String reviewsPath = "resources/review_polarity/";
+	
+	/** The Constant modelPath. */
 	public final static String modelPath = "resources/models/WordCountLists/";
-	// Make sure there is a "path + 'train/neg'" and a "path + 'train/pos'"
+	// Make sure there is a "path + 'train/neg'" and a "path + 'train/pos'" <- still needed? Kevin
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws InterruptedException the interrupted exception
+	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException, InterruptedException {
 		ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
@@ -38,6 +52,24 @@ public class Main {
 		List<CountedWordList> negativeWordLists = a.getNegativeWordLists();
 		List<CountedWordList> positiveWordLists = a.getPositiveWordLists();
 
+		negativeWordLists = removeSomeHighrankedWorthlessWordsFromLists(negativeWordLists);
+		positiveWordLists = removeSomeHighrankedWorthlessWordsFromLists(positiveWordLists);
+
+		a.setNegativeWordLists(negativeWordLists);
+		a.setPositiveWordLists(positiveWordLists);
+
+		a.testWordCountAnalysis(testSets);
+
+		// a.runOurNaiveBayesAnalysis();
+	}
+	
+	/**
+	 * Removes the some highranked worthless words from lists.
+	 *
+	 * @param wordLists the word lists
+	 * @return the list
+	 */
+	private static List<CountedWordList> removeSomeHighrankedWorthlessWordsFromLists(List<CountedWordList> wordLists) {
 		ArrayList<String> removeList = new ArrayList<String>();
 		removeList.add("\'s");
 		removeList.add("film");
@@ -59,23 +91,9 @@ public class Main {
 		removeList.add("scene");
 		removeList.add("know");
 		
-		
-		for (CountedWordList list : negativeWordLists) {
+		for (CountedWordList list : wordLists) {
 			list.getWordList().entrySet().removeIf(e -> removeList.contains(e.getKey()));
 		}
-		for (CountedWordList list : positiveWordLists) {
-			list.getWordList().entrySet().removeIf(e -> removeList.contains(e.getKey()));
-		}
-
-
-		
-
-		a.setNegativeWordLists(negativeWordLists);
-		a.setPositiveWordLists(positiveWordLists);
-
-		a.testWordCountAnalysis(testSets);
-
-		// a.runOurNaiveBayesAnalysis();
+		return wordLists;
 	}
-
 }
