@@ -3,6 +3,7 @@ package features;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class StopWords implements Feature{
 	
 	List<String> stopWordList;

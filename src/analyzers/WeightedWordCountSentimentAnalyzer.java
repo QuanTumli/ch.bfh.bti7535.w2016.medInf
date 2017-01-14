@@ -1,18 +1,14 @@
 package analyzers;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.util.StringUtils;
 
 import interfaces.Analyzer;
-import opennlp.tools.postag.POSEvaluator;
+import models.CountedWordList;
 
 public class WeightedWordCountSentimentAnalyzer extends Analyzer {
 
-	private Map<String, Integer> positives;
-	private Map<String, Integer> negatives;
+	private CountedWordList positives;
+	private CountedWordList negatives;
 
 	public WeightedWordCountSentimentAnalyzer() {
 //		positives = positiveWordsAndWeights;
@@ -38,32 +34,29 @@ public class WeightedWordCountSentimentAnalyzer extends Analyzer {
 //	    });
 	}
 
-	public int analyze(String message) {
-		
-		int countedPositivWords = 0;
-		int countedNegativWords = 0;
-		for (String positiveWord : positives.keySet()) {
-			int count = StringUtils.countOccurrencesOf(message, positiveWord);
-			countedPositivWords += (count * positives.get(positiveWord));
+	public boolean analyze(List<String> featureizedTokens) {
+		int countedPositiveWords = 0;
+		int countedNegativeWords = 0;
+
+		for(String token : featureizedTokens) {
+			if(positives.getWordList().containsKey(token)) {
+				countedPositiveWords += positives.getWordValue(token);
+			}
+			if(negatives.getWordList().containsKey(token)) {
+				countedNegativeWords+= negatives.getWordValue(token);
+			}
 		}
-		for (String negativeWord : negatives.keySet()) {
-			int count = StringUtils.countOccurrencesOf(message, negativeWord);
-			countedNegativWords += (count * negatives.get(negativeWord));
-		}
-//		System.out.println(countedPositivWords + "/(" + countedPositivWords + "+" + countedNegativWords + ")="
-//				+ ((float) countedPositivWords / (float) (countedPositivWords + countedNegativWords)));
-		return ((float) countedPositivWords / (float) (countedPositivWords + countedNegativWords) > 0.5) ? 1 : -1;
+		return ((float) countedPositiveWords / (float) (countedPositiveWords + countedNegativeWords) > 0.5) ? true : false;
 	}
 
 	@Override
-	public void setPositiveWords(Map<String, Integer> positiveWords) {
+	public void setPositiveWords(CountedWordList positiveWords) {
 		this.positives = positiveWords;
 		
 	}
 
 	@Override
-	public void setNegativeWords(Map<String, Integer> negativeWords) {
+	public void setNegativeWords(CountedWordList negativeWords) {
 		this.negatives = negativeWords;
-		
 	}
 }

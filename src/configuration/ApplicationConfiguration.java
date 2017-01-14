@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import analyzers.WeightedWordCountSentimentAnalyzer;
 import analyzers.WordCountSentimentAnalyzer;
 import features.NegationFeature;
+import features.StopWordFeature;
 import helpers.FeatureHelper;
 import helpers.KFoldHelper;
 import helpers.TokenizationHelper;
@@ -22,6 +23,7 @@ import main.MyApplication;
 import opennlp.tools.sentdetect.SentenceDetector;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
+import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
@@ -38,45 +40,47 @@ public class ApplicationConfiguration {
 	public MyApplication getApplication() throws IOException {
 		MyApplication app = new MyApplication();
 		app.setKFoldHelper(getKeyFoldHelper());
-		app.setTokenizers(getTokenizers());
+//		app.setTokenizers(getTokenizers());
 		app.setAnalyzers(getAnalyzers());
 		app.setTokenizationHelper(getTokenizationHelper());
 		app.setFeatureHelper(getFeatureHelper());
 		return app;
 	}
 	
-	@Bean
-	public List<Feature> getFeatures() {
+	
+	@SuppressWarnings("serial")
+	private List<Feature> getFeatures() {
 		return new ArrayList<Feature>() {{
-			add(getNegationTextModifier());
+			add(getNegationFeature());
+			add(getStopWordFeature());
 		}};
 	}
 	
+	@SuppressWarnings("serial")
 	@Bean
 	public List<Analyzer> getAnalyzers() {
 		
 		return new ArrayList<Analyzer>() {{ 
 				add(new WordCountSentimentAnalyzer());
 				add(new WeightedWordCountSentimentAnalyzer());
-		
 			}};
 	}
 	
+	@SuppressWarnings("serial")
 	@Bean	
 	public List<Tokenizer> getTokenizers() throws IOException {
 		
 		return new ArrayList<Tokenizer>() {{
 			add(new TokenizerME(tokenizerModel()));
-//			add(SimpleTokenizer.INSTANCE);
+			add(SimpleTokenizer.INSTANCE);
 			add(WhitespaceTokenizer.INSTANCE);
 		}};
-		//return SimpleTokenizer.INSTANCE;
-		//return WhitespaceTokenizer.INSTANCE;
 	}
 	
 	@Bean
-	public TokenizationHelper getTokenizationHelper() {
+	public TokenizationHelper getTokenizationHelper() throws IOException {
 		TokenizationHelper helper = new TokenizationHelper();
+		helper.setTokenizers(getTokenizers());
 		return helper;
 	}
 	
@@ -117,11 +121,15 @@ public class ApplicationConfiguration {
 		return f;
 	}
 	
-	@Bean
-	public NegationFeature getNegationTextModifier() {
+	public NegationFeature getNegationFeature() {
 		NegationFeature m = new NegationFeature();
 		return m;
 	}
+	
+	public Feature getStopWordFeature() {
+		return new StopWordFeature();
+	}
+	
 
 	private TokenizerModel tokenizerModel() throws IOException {
 		InputStream modelIn = new FileInputStream(EN_TOKEN_MODEL);

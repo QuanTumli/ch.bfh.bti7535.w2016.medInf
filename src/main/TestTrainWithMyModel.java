@@ -1,12 +1,13 @@
 package main;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import features.Feature;
 import helpers.FileHelper;
+import features.Feature;
 import opennlp.tools.tokenize.Tokenizer;
 
 public class TestTrainWithMyModel {
@@ -151,7 +152,7 @@ public class TestTrainWithMyModel {
 	}
 	
 	private void trainModel(String pathToDocument, String category) throws IOException {
-		String fileContentTrain = FileHelper.readFileToString(pathToDocument);
+		String fileContentTrain = FileHelper.readFileToString(Paths.get(pathToDocument));
 		
 		// -- tokenize
 		List<String> wordsTrain = new ArrayList<String>(Arrays.asList(this.theTokenizer.tokenize(fileContentTrain)));
@@ -166,7 +167,7 @@ public class TestTrainWithMyModel {
 	}
 	
 	private String testModel(String pathToDocument) throws IOException {
-		String fileContentTest = FileHelper.readFileToString(pathToDocument);
+		String fileContentTest = FileHelper.readFileToString(Paths.get(pathToDocument));
 		
 		// -- tokenize
 		List<String> wordsTest = new ArrayList<String>(Arrays.asList(this.theTokenizer.tokenize(fileContentTest)));

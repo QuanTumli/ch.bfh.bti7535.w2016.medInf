@@ -1,10 +1,12 @@
 package interfaces;
 
-import java.util.Map;
+import java.util.List;
+
+import models.CountedWordList;
 
 public abstract class Analyzer {
 
-	public abstract int analyze(String message);
-	public abstract void setPositiveWords(Map<String, Integer> positiveWords);
-	public abstract void setNegativeWords(Map<String, Integer> negativeWords);
+	public abstract boolean analyze(List<String> tokenizedReview);
+	public abstract void setPositiveWords(CountedWordList positiveWordList);
+	public abstract void setNegativeWords(CountedWordList negativeWords);
 }

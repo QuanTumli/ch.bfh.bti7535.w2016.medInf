@@ -77,35 +77,36 @@ public class NegationFeature extends Feature {
 				else if (tokens.get(i).equals("not")) {
 					if(i > 0) {
 						tokens.set(i - 1, "NOT_" + tokens.get(i - 1));
+						tokens.remove(i);
 					}
 					tokens = handleNegationUntilPunctuation(i, tokens);
 					i += shared_counter;
 				}
-//				if (tokens.size() >= (i + 2)) {
-//					if (tokens.get(i).matches("^.+n$") && tokens.get(i + 1).equals("'t")) {
-//
-//						tokens.set(i, "NOT_" + tokens.get(i).substring(0, tokens.get(i).length() - 1));
-//						tokens.remove(i + 1);
-//						tokens = handleNegationUntilPunctuation(i, tokens);
-//						i += shared_counter;
-//					}
-//				}
-//				if (tokens.size() >= (i + 3)) {
-//					if (tokens.get(i).matches("^.+n$") && tokens.get(i + 1).equals("'")
-//							&& tokens.get(i + 2).equals("t")) {
-//
-//						tokens.set(i, "NOT_" + tokens.get(i).substring(0, tokens.get(i).length() - 1));
-//						tokens.remove(i + 1); // Remember, tokens in list
-//												// shifting
-//												// to left.
-//						tokens.remove(i + 1); // So this line removes what was i
-//												// + 2
-//												// before removing the previous
-//												// element.
-//						tokens = handleNegationUntilPunctuation(i, tokens);
-//						i += shared_counter;
-//					}
-//				}
+				if (tokens.size() >= (i + 2)) {
+					if (tokens.get(i).matches("^.+n$") && tokens.get(i + 1).equals("'t")) {
+
+						tokens.set(i, "NOT_" + tokens.get(i).substring(0, tokens.get(i).length() - 1));
+						tokens.remove(i + 1);
+						tokens = handleNegationUntilPunctuation(i, tokens);
+						i += shared_counter;
+					}
+				}
+				if (tokens.size() >= (i + 3)) {
+					if (tokens.get(i).matches("^.+n$") && tokens.get(i + 1).equals("'")
+							&& tokens.get(i + 2).equals("t")) {
+
+						tokens.set(i, "NOT_" + tokens.get(i).substring(0, tokens.get(i).length() - 1));
+						tokens.remove(i + 1); // Remember, tokens in list
+												// shifting
+												// to left.
+						tokens.remove(i + 1); // So this line removes what was i
+												// + 2
+												// before removing the previous
+												// element.
+						tokens = handleNegationUntilPunctuation(i, tokens);
+						i += shared_counter;
+					}
+				}
 
 			}
 			map.replace(key, tokens);

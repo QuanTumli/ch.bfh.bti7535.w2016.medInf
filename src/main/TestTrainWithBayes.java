@@ -2,6 +2,7 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -125,7 +126,7 @@ public class TestTrainWithBayes {
 		// -- learn
 		
 		// -- tokenize
-		String fileContentTrain = FileHelper.readFileToString(pathToDocument);
+		String fileContentTrain = FileHelper.readFileToString(Paths.get(pathToDocument));
 		List<String> wordsTrain = new ArrayList<String>(Arrays.asList(tokenizer.tokenize(fileContentTrain)));
 		
 		// -- remove stopwords
@@ -156,7 +157,7 @@ public class TestTrainWithBayes {
 		// -- classify
 		
 		// -- tokenize
-		String fileContentTest = FileHelper.readFileToString(pathToDocument);
+		String fileContentTest = FileHelper.readFileToString(Paths.get(pathToDocument));
 		List<String> wordsTest = new ArrayList<String>(Arrays.asList(tokenizer.tokenize(fileContentTest)));
 		
 		// -- remove stopwords
