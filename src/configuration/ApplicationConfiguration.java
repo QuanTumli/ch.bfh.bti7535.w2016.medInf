@@ -62,7 +62,7 @@ public class ApplicationConfiguration {
 	@SuppressWarnings("serial")
 	private List<Feature> getFeatures() {
 		return new ArrayList<Feature>() {{
-			add(getNegationFeature());
+//			add(getNegationFeature());
 			add(getStopWordFeature());
 		}};
 	}

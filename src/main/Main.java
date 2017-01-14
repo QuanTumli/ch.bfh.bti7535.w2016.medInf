@@ -11,7 +11,6 @@ import configuration.ApplicationConfiguration;
 import models.CountedWordList;
 import models.FeatureizedTestSet;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Main.
  */
@@ -58,6 +57,7 @@ public class Main {
 		a.setNegativeWordLists(negativeWordLists);
 		a.setPositiveWordLists(positiveWordLists);
 
+		// ATTENTION: TO GET BEST RESULTS UP TO 70+ % REMOVE NEGATION FEATURE IN ApplicationConfiguration#getFeatures()
 		a.testWordCountAnalysis(testSets);
 
 		// a.runOurNaiveBayesAnalysis();
