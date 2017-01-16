@@ -45,7 +45,7 @@ public class TokenizationHelper {
 			tokenizedFiles.putAll(tokenizeFilesInFolder(positiveReviewsPath, tokenizer));
 			
 			for (TestSet testSet : listOfTestSets) {
-				TokenizedTestSet tokenizedTestSet = new TokenizedTestSet(testSet, tokenizer.getClass());
+				TokenizedTestSet tokenizedTestSet = new TokenizedTestSet(testSet.getName(), tokenizer.getClass());
 				for (String filePath : testSet.getNegativeTestFiles()) {
 					tokenizedTestSet.getTokenizedNegativeTestFiles().put(filePath, tokenizedFiles.get(filePath));
 				}

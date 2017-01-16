@@ -8,7 +8,11 @@ import java.util.Map;
 /**
  * The Class FeatureizedTestSet.
  */
-public class FeatureizedTestSet extends TokenizedTestSet {
+public class FeatureizedTestSet {
+	
+	private String name;
+	
+	private Class<?> tokenizer;
 	
 	/** The features. */
 	private List<Class<?>> features;
@@ -30,8 +34,9 @@ public class FeatureizedTestSet extends TokenizedTestSet {
 	 *
 	 * @param tokenizedTestSet the tokenized test set
 	 */
-	public FeatureizedTestSet(TokenizedTestSet tokenizedTestSet) {
-		super(tokenizedTestSet.getTestSet(), tokenizedTestSet.getTokenizer());
+	public FeatureizedTestSet(String name, Class<?> tokenizer) {
+		this.name = name;
+		this.tokenizer = tokenizer;
 		featureizedPositiveTestFiles = new HashMap<String, List<String>>();
 		featureizedNegativeTestFiles = new HashMap<String, List<String>>();
 		featureizedPositiveTrainingFiles = new HashMap<String, List<String>>();
@@ -129,4 +134,19 @@ public class FeatureizedTestSet extends TokenizedTestSet {
 		this.featureizedNegativeTrainingFiles = featureizedNegativeTrainingFiles;
 	}
 
+	public Class<?> getTokenizer() {
+		return tokenizer;
+	}
+
+	public void setTokenizer(Class<?> tokenizer) {
+		this.tokenizer = tokenizer;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

@@ -102,7 +102,6 @@ public class MyApplication {
 	public void runModelCreation(List<FeatureizedTestSet> featureizedTestSets) throws IOException {
 		List<CountedWordList> negativeWordLists = new ArrayList<CountedWordList>();
 		List<CountedWordList> positiveWordLists = new ArrayList<CountedWordList>();
-
 		System.out.println("-------------------------------------------");
 		System.out.print("Creating Models");
 		
@@ -112,6 +111,9 @@ public class MyApplication {
 					.add(WordListCreator.createWordList(name, set.getFeatureizedNegativeTrainingFiles().values()));
 			positiveWordLists
 					.add(WordListCreator.createWordList(name, set.getFeatureizedPositiveTrainingFiles().values()));
+			// Clean memory as soon as possible for someones lowtec computer ;-)
+			set = null;
+			System.gc();
 			System.out.print(".");
 		}
 

@@ -7,8 +7,10 @@ import java.util.Map;
 /**
  * The Class TokenizedTestSet.
  */
-public class TokenizedTestSet extends TestSet {
+public class TokenizedTestSet {
 
+	private String name;
+	
 	/** The tokenizer. */
 	private Class<?> tokenizer;
 
@@ -31,31 +33,12 @@ public class TokenizedTestSet extends TestSet {
 	 * @param tokenizer the tokenizer
 	 */
 	public TokenizedTestSet(String name, Class<?> tokenizer) {
-		super(name);
+		this.name = name;
 		this.tokenizer = tokenizer;
 		tokenizedPositiveTestFiles = new HashMap<String, List<String>>();
 		tokenizedNegativeTestFiles = new HashMap<String, List<String>>();
 		tokenizedPositiveTrainingFiles = new HashMap<String, List<String>>();
 		tokenizedNegativeTrainingFiles = new HashMap<String, List<String>>();
-	}
-
-	/**
-	 * Instantiates a new tokenized test set.
-	 *
-	 * @param testSet the test set
-	 * @param tokenizer the tokenizer
-	 */
-	public TokenizedTestSet(TestSet testSet, Class<?> tokenizer) {
-		super(testSet.getName());
-		super.setNegativeTestFiles(testSet.getNegativeTestFiles());
-		super.setNegativeTrainingFiles(testSet.getNegativeTrainingFiles());
-		super.setPositiveTestFiles(testSet.getPositiveTestFiles());
-		super.setPositiveTrainingFiles(testSet.getPositiveTrainingFiles());
-		tokenizedPositiveTestFiles = new HashMap<String, List<String>>();
-		tokenizedNegativeTestFiles = new HashMap<String, List<String>>();
-		tokenizedPositiveTrainingFiles = new HashMap<String, List<String>>();
-		tokenizedNegativeTrainingFiles = new HashMap<String, List<String>>();
-		this.tokenizer = tokenizer;
 	}
 
 	/**
@@ -148,4 +131,11 @@ public class TokenizedTestSet extends TestSet {
 		this.tokenizedNegativeTrainingFiles = tokenizedNegativeTrainingFiles;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

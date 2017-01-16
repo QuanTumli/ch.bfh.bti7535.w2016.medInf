@@ -24,26 +24,26 @@ public class FeatureHelper {
 	public List<FeatureizedTestSet> featureizeTestSets(List<TokenizedTestSet> tokenizedTestSets) {
 		List<FeatureizedTestSet> featureizedTestSets = new ArrayList<FeatureizedTestSet>();
 		
-		for (TokenizedTestSet tokenizedTestSet : tokenizedTestSets) {
-			FeatureizedTestSet featureizedTestSet = new FeatureizedTestSet(tokenizedTestSet);
+		for (int i = 0; i < tokenizedTestSets.size(); i++) {
+			FeatureizedTestSet featureizedTestSet = new FeatureizedTestSet(tokenizedTestSets.get(i).getName(), tokenizedTestSets.get(i).getTokenizer());
 			if (features.size() == 0) {
-				featureizedTestSet.setFeatureizedNegativeTestFiles(tokenizedTestSet.getTokenizedNegativeTestFiles());
+				featureizedTestSet.setFeatureizedNegativeTestFiles(tokenizedTestSets.get(i).getTokenizedNegativeTestFiles());
 				featureizedTestSet
-						.setFeatureizedNegativeTrainingFiles(tokenizedTestSet.getTokenizedNegativeTrainingFiles());
-				featureizedTestSet.setFeatureizedPositiveTestFiles(tokenizedTestSet.getTokenizedPositiveTestFiles());
+						.setFeatureizedNegativeTrainingFiles(tokenizedTestSets.get(i).getTokenizedNegativeTrainingFiles());
+				featureizedTestSet.setFeatureizedPositiveTestFiles(tokenizedTestSets.get(i).getTokenizedPositiveTestFiles());
 				featureizedTestSet
-						.setFeatureizedPositiveTrainingFiles(tokenizedTestSet.getTokenizedPositiveTrainingFiles());
+						.setFeatureizedPositiveTrainingFiles(tokenizedTestSets.get(i).getTokenizedPositiveTrainingFiles());
 			}
 			for (Feature feature : features) {
 				featureizedTestSet.getFeatures().add(feature.getClass());
 				featureizedTestSet.setFeatureizedNegativeTestFiles(
-						feature.applyFeature(tokenizedTestSet.getTokenizedNegativeTestFiles()));
+						feature.applyFeature(tokenizedTestSets.get(i).getTokenizedNegativeTestFiles()));
 				featureizedTestSet.setFeatureizedNegativeTrainingFiles(
-						feature.applyFeature(tokenizedTestSet.getTokenizedNegativeTrainingFiles()));
+						feature.applyFeature(tokenizedTestSets.get(i).getTokenizedNegativeTrainingFiles()));
 				featureizedTestSet.setFeatureizedPositiveTestFiles(
-						feature.applyFeature(tokenizedTestSet.getTokenizedPositiveTestFiles()));
+						feature.applyFeature(tokenizedTestSets.get(i).getTokenizedPositiveTestFiles()));
 				featureizedTestSet.setFeatureizedPositiveTrainingFiles(
-						feature.applyFeature(tokenizedTestSet.getTokenizedPositiveTrainingFiles()));
+						feature.applyFeature(tokenizedTestSets.get(i).getTokenizedPositiveTrainingFiles()));
 			}
 			featureizedTestSets.add(featureizedTestSet);
 		}
