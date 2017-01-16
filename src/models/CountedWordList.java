@@ -5,6 +5,9 @@ import java.util.Map;
 
 /**
  * The Class CountedWordList.
+ * 
+ * @author Jonas Mosimann
+ * @author Kevin Tippenhauer
  */
 public class CountedWordList {
 	
@@ -43,7 +46,11 @@ public class CountedWordList {
 	 * @return the word value
 	 */
 	public int getWordValue(String word){
-		return wordList.get(word);
+		Integer count = this.wordList.get(word);
+		if(count == null){
+			return 0;
+		}
+		return count;
 	}
 	
 	/**

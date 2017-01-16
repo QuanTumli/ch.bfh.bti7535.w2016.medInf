@@ -43,10 +43,11 @@ public class Main {
 		}
 
 		a.setModelPath(modelPath);
-
+		
 		List<FeatureizedTestSet> testSets = a.featureizeTokenizedTestSets(a.tokenizeTestSets(a.doKFoldFilesInFolder()));
+		
 		a.runModelCreation(testSets);
-
+		
 		a.loadModels();
 		List<CountedWordList> negativeWordLists = a.getNegativeWordLists();
 		List<CountedWordList> positiveWordLists = a.getPositiveWordLists();
@@ -58,9 +59,7 @@ public class Main {
 		a.setPositiveWordLists(positiveWordLists);
 
 		// ATTENTION: TO GET BEST RESULTS UP TO 70+ % REMOVE NEGATION FEATURE IN ApplicationConfiguration#getFeatures()
-		a.testWordCountAnalysis(testSets);
-
-		// a.runOurNaiveBayesAnalysis();
+		a.testAnalyzers(testSets);
 	}
 	
 	/**

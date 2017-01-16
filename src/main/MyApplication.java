@@ -18,14 +18,13 @@ import models.CountedWordList;
 import models.FeatureizedTestSet;
 import models.TestSet;
 import models.TokenizedTestSet;
-import opennlp.tools.tokenize.Tokenizer;
 
 /**
  * The Class MyApplication.
  */
 public class MyApplication {
 
-/** The analyzers. */
+	/** The analyzers. */
 	List<Analyzer> analyzers;
 	
 	/** The tokenization helper. */
@@ -161,7 +160,7 @@ public class MyApplication {
 	 * @param featureizedTestSets the featureized test sets
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public void testWordCountAnalysis(List<FeatureizedTestSet> featureizedTestSets) throws IOException {
+	public void testAnalyzers(List<FeatureizedTestSet> featureizedTestSets) throws IOException {
 		Map<String, FeatureizedTestSet> mapTestSets = new HashMap<String, FeatureizedTestSet>();
 		for(FeatureizedTestSet set : featureizedTestSets) {
 			mapTestSets.put(getAbsoluteSetName(set), set);
@@ -264,34 +263,6 @@ public class MyApplication {
 	 */
 	public void setReviewsPath(String reviewsPath) {
 		this.reviewsPath = reviewsPath;
-	}
-
-	/**
-	 * Run our naive bayes analysis.
-	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public void runOurNaiveBayesAnalysis() throws IOException {
-//		You can get the tokenizers with TokenizationHelper.getTokenizers(), but may be you can move tokenization to the TokenizationHelper
-		
-		for (Tokenizer tokenizer : TokenizationHelper.getTokenizers()) {
-			/* new try */
-			new TestTrainWithBayes(tokenizer);
-			System.out.println("------------------" + tokenizer.getClass().getSimpleName() + "------------------");
-//			 new TestTrainWithMyModel(tokenizer);
-		}
-		System.out.println("------------------" + TokenizationHelper.getTokenizers().get(0).getClass().getSimpleName() + "------------------");
-//		 new TestTrainWithMyModel(tokenizers.get(0));
-
-//		 String posWords = path + "train/wordMapped/" +
-//		 tokenizer.getClass().getSimpleName() + "/pos.txt"; String negWords =
-//		 path + "train/wordMapped/" + tokenizer.getClass().getSimpleName() +
-//		 "/neg.txt"; String posTrain = path + "train/pos"; String negTrain =
-//		 path + "train/neg";
-		
-//		 SentimentAnalyse sa = new SentimentAnalyse();
-//		 sa.trainFilesInFolder(posTrain, posWords, negTrain, negWords);
-
 	}
 
 	/**
