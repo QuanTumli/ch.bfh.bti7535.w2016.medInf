@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import analyzers.NaiveBayesSentimentAnalyzer;
 import analyzers.WeightedWordCountSentimentAnalyzer;
 import analyzers.WordCountSentimentAnalyzer;
 import features.NegationFeature;
@@ -77,6 +78,7 @@ public class ApplicationConfiguration {
 		return new ArrayList<Analyzer>() {{ 
 				add(new WordCountSentimentAnalyzer());
 				add(new WeightedWordCountSentimentAnalyzer());
+				add(new NaiveBayesSentimentAnalyzer());
 			}};
 	}
 	

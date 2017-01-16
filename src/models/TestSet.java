@@ -32,7 +32,7 @@ public class TestSet {
 		this.name = name;
 		positiveTestFiles = new ArrayList<String>();
 		negativeTestFiles = new ArrayList<String>();
-		positiveTestFiles = new ArrayList<String>();
+		negativeTrainingFiles = new ArrayList<String>();
 		positiveTrainingFiles = new ArrayList<String>();
 	}
 	
