@@ -25,6 +25,28 @@ import models.CountedWordList;
  * The Class FileHelper.
  */
 public class FileHelper {
+	
+	/**
+	 * Read stop word list.
+	 *
+	 * @param fileName the file name
+	 * @return the list
+	 */
+	public static List<String> readFileToList(String fileName) {
+		List<String> stopWordList = new ArrayList<String>();
+		BufferedReader stopWordReader = FileHelper.readFile(fileName);
+		String inputLine;
+		try {
+			while ((inputLine = stopWordReader.readLine()) != null) {
+				stopWordList.add(inputLine);
+			}
+			return stopWordList;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 
 	/**
 	 * Gets the file names from folder.
