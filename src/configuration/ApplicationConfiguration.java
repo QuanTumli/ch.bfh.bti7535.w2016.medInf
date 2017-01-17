@@ -34,10 +34,10 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
 @Configuration
 public class ApplicationConfiguration {
 	
-	/** The Constant EN_TOKEN_MODEL. */
+	/** The Constant EN_TOKEN_MODEL contains the path to the tokenizer model. */
 	private final static String EN_TOKEN_MODEL = "resources/models/tokenization/en-token.bin";
 	
-	/** The Constant K_FOLD_VALUE. */
+	/** The Constant K_FOLD_VALUE defines how the testdata will be splitted. */
 	private final static int K_FOLD_VALUE = 10;
 	
 	/**
@@ -65,10 +65,10 @@ public class ApplicationConfiguration {
 	@SuppressWarnings("serial")
 	private List<Feature> getFeatures() {
 		return new ArrayList<Feature>() {{
-//			add(getNegationFeature());
-			add(getSpecialCharsFeature());
+//			add(getNegationFeature()); // Little buggy buts gets all kinds of negations.
+			add(getSpecialCharsFeature()); // Removes some special chars from the lists.
 			add(getStopWordFeature());
-			add(getNegationFeature2());
+			add(getNegationFeature2()); // Not buggy but misses some negations.
 		}};
 	}
 	
