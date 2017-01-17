@@ -184,7 +184,8 @@ public class MyApplication {
 				FeatureizedTestSet set = mapTestSets.get(positiveWordList.getName());
 				
 				if(set == null) {
-					System.err.println("No TestSet found to test model: " + positiveWordList.getName());
+					// Test set is null means, that there is a WordList for a configuration (selected feature etc.) for which
+					// no test messages were generated.
 					continue;
 				}
 				
