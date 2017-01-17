@@ -1,9 +1,0 @@
-Diary of Jonas Mosimann & Kevin Tippenhauer
-
-
-Date		Duration	Who		Task
-29.09.16	0.5h		Jonas	Information about course
-29.09.16	0.5h		Kevin	Information about course
-29.09.16	1h			Jonas	Installed Eclipse, created & added repository
-30.09.16  2h      Jonas Ex 1 "Gnuplot"
-11.10.16	3.5h		Kevin	Ex. "Word processing" + research (tokenizer improvement)
